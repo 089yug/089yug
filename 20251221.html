@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>下午茶</title>
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Microsoft JhengHei", sans-serif;
+    background-color: #f5f0e6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+.header {
+    background-color: #d6a77a; 
+    padding: 25px 0;
+    text-align: center;
+    font-size: 36px;
+    font-weight: bold;
+    color: #fff;
+}
+.nav {
+    display: flex;
+    background-color: #f0c7a4;
+    position: relative;
+}
+.nav a:first-child { margin-right: auto; width: 150px; text-align: center; }
+.nav a, .dropdown > a {
+    padding: 20px 40px;
+    text-decoration: none;
+    color: #5a3e36;
+    font-size: 26px;
+    font-weight: bold;
+    display: block;
+    border-right: 2px solid #ffffff55;
+}
+.nav a:last-child, .dropdown:last-child > a { border-right: none; }
+.dropdown { position: relative; }
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f7e0d4;
+    min-width: 160px;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    z-index: 10;
+}
+.dropdown-content a {
+    padding: 12px 20px;
+    display: block;
+    color: #5a3e36;
+    text-decoration: none;
+    font-size: 20px;
+    border-bottom: 1px solid #ffffff44;
+    text-align: center;  
+}
+.dropdown-content a:last-child { border-bottom: none; }
+.dropdown:hover .dropdown-content { display: block; }
+
+.home-banner {
+    width: 100%;
+    background-image: url('https://luxurywatcher.com/uploads/article/2/5/25434/1536907731121.jpg');
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    padding: 80px 20px;
+    text-align: center;
+    margin-bottom: 40px;
+    color: #fff;
+}
+
+.home-banner-text h1 {
+    font-size: 48px;
+    margin: 0;
+    text-shadow: 0 0 8px rgba(0,0,0,0.3);
+}
+
+.home-banner-text p {
+    font-size: 22px;
+    margin-top: 10px;
+    opacity: 0.9;
+}
+
+.home-sections {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
+
+.home-card {
+    flex: 1;
+    min-width: 280px;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.home-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.home-card h3 {
+    margin: 15px 15px 10px;
+    color: #8b5e3c;
+}
+
+.home-card p {
+    margin: 0 15px 20px;
+    color: #5a3e36;
+    font-size: 26px;
+}
+
+.home-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+}
+
+
+.home-subtitle {
+    margin: 10px 0 20px;
+    color: #8b5e3c;
+    font-size: 26px;
+}
+
+.home-recommend {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.recommend-item {
+    display: flex;
+    background: #fff;
+    border-radius: 12px;
+    padding: 15px;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.recommend-item img {
+    width: 110px;
+    border-radius: 10px;
+}
+
+.recommend-item h4 {
+    margin: 0;
+    font-size: 20px;
+    color: #8b5e3c;
+}
+
+.recommend-item p {
+    margin: 5px 0 0;
+    font-size: 18px;
+    color: #5a3e36;
+}
+
+.recommend-item:hover {
+    transform: translateX(5px);
+}
+
+.content {
+    background-color: #fff1e6;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    flex: 1;
+    width: 100%;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    color: #5a3e36;
+    overflow-y: auto;
+}
+
+.section-content {
+    display: none;
+    width: 90%;
+    max-width: 1000px;
+    margin: 20px auto;
+    line-height: 1.8;
+    padding: 20px;
+}
+.tea-section { margin-bottom: 30px; }
+.info-box {
+    background-color: #fff9f0;
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow:0 2px 5px rgba(0,0,0,0.1);
+}
+.tea-img {
+    width: 100%;
+    max-width: 400px;
+    display: block;
+    margin: 15px auto;
+    border-radius:8px;
+    box-shadow:0 4px 6px rgba(0,0,0,0.1);
+}
+
+.section-content h3 {
+    position: relative;
+    padding-left: 15px;
+    font-size: 28px;
+    color: #8b5e3c;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+.section-content h3::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 5px;
+    height: 100%;
+    background-color: #d6a77a;
+    border-radius: 2px;
+}
+
+.footer {
+    background-color: #d6a77a;
+    padding: 15px 0;
+    text-align: center;
+    font-size: 18px;
+    color: #fff;
+}
+
+.dropdown-content .submenu {
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    background-color: #f7e0d4; 
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.15);
+    border-radius: 5px;
+    padding: 0;
+    z-index: 20;
+}
+
+.dropdown-content .has-submenu:hover > .submenu {
+    display: block;
+}
+
+.dropdown-content .submenu a {
+    padding: 12px 20px;
+    border-bottom: 1px solid #ffffff44;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.dropdown-content .submenu a:last-child {
+    border-bottom: none;
+}
+
+.dropdown-content .has-submenu {
+    position: relative;
+}
+
+
+.dessert-layout {
+    display: flex;
+    gap: 30px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.dessert-sidebar {
+    flex: 0 0 260px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+    height: fit-content;
+}
+
+.dessert-sidebar h4 {
+    font-size: 20px;
+    margin-bottom: 8px;
+    color: #8b5e3c;
+    border-left: 4px solid #d6a77a;
+    padding-left: 10px;
+}
+
+.dessert-sidebar p {
+    margin: 4px 0 12px;
+    font-size: 18px;
+}
+
+.dessert-main {
+    flex: 1;
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+}
+
+.dessert-main img {
+    width: 100%;
+    max-width: 100%;
+    height: 400px;          
+    object-fit: cover;      
+    border-radius: 10px;
+    margin-bottom: 20px;
+    background-color: #f5f0e6; 
+}
+
+.dessert-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.dessert-tag {
+    padding: 6px 12px;
+    background: #f5f0e6;
+    border-radius: 20px;
+    font-size: 14px;
+    border: 1px solid #e0d7cc;
+}
+
+.dessert-section-title {
+    font-size: 24px;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    color: #8b5e3c;
+    border-left: 5px solid #d6a77a;
+    padding-left: 12px;
+}
+
+.home-feature {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    margin: 70px auto;
+    max-width: 1000px;
+    padding: 0 20px;
+    flex-wrap: wrap;
+}
+
+.home-feature img {
+    width: 45%;
+    min-width: 280px;
+    border-radius: 15px;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+}
+
+.home-feature h3 {
+    font-size: 32px;      
+    line-height: 1.4;
+}
+
+.home-feature h4 {
+    font-size: 22px;     
+    margin-top: 20px;
+    margin-bottom: 8px;
+}
+
+.home-feature p {
+    font-size: 18px;      
+    line-height: 1.9;
+    margin-bottom: 14px;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">SUM下午茶</div>
+
+    <div class="nav">
+        <a href="#" onclick="showSection('home'); return false;">首頁</a>
+
+        <div class="dropdown">
+            <a href="#">茶類 ▼</a>
+            <div class="dropdown-content">
+                <a href="#" onclick="showSection('red'); return false;">紅茶</a>
+                <a href="#" onclick="showSection('green'); return false;">綠茶</a>
+                <a href="#" onclick="showSection('flower'); return false;">花茶</a>
+                <a href="#" onclick="showSection('milk-tea'); return false;">奶茶</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <a href="#">甜點 ▼</a>
+            <div class="dropdown-content">
+
+                <div class="has-submenu">
+                    <a href="#">蛋糕類 ▶</a>
+                    <div class="submenu">
+                        <a href="#" onclick="showSection('matcha-cake'); return false;">抹茶小蛋糕</a>
+                        <a href="#" onclick="showSection('lemon-cake'); return false;">檸檬蛋糕</a>
+                        <a href="#" onclick="showSection('cheese-cake'); return false;">輕乳酪蛋糕</a>
+                    </div>
+                </div>
+
+                <div class="has-submenu">
+                    <a href="#">塔派類 ▶</a>
+                    <div class="submenu">
+                        <a href="#" onclick="showSection('lemon-tart'); return false;">檸檬塔</a>
+                        <a href="#" onclick="showSection('berry-tart'); return false;">莓果塔</a>
+                        <a href="#" onclick="showSection('fruit-tart'); return false;">水果塔</a>
+                    </div>
+                </div>
+
+                <div class="has-submenu">
+                    <a href="#">餅乾類 ▶</a>
+                    <div class="submenu">
+                        <a href="#" onclick="showSection('scone'); return false;">司康</a>
+                        <a href="#" onclick="showSection('butter-cookie'); return false;">英式奶油餅乾</a>
+                        <a href="#" onclick="showSection('macaron'); return false;">馬卡龍</a>
+                    </div>
+                </div>
+
+                <div class="has-submenu">
+                    <a href="#">和菓子 ▶</a>
+                    <div class="submenu">
+                        <a href="#" onclick="showSection('yokan'); return false;">羊羹</a>
+                        <a href="#" onclick="showSection('mochi'); return false;">麻糬</a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <a href="#">知識 ▼</a>
+            <div class="dropdown-content">
+                <a href="#" onclick="showSection('origin'); return false;">起源</a>
+                <a href="#" onclick="showSection('etiquette'); return false;">禮儀</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div id="home" class="section-content homepage" style="display:block;">
+
+            <div class="home-banner">
+                <div class="home-banner-text">
+                    <h1>SUM 下午茶</h1>
+                    <p>給下午茶新手的風味指南，從一杯茶開始</p>
+                </div>
+            </div>
+
+            <div class="home-feature">
+                <div>
+                    <h3>下午茶的搭配原則</h3>
+
+                    <p>
+                        下午茶講究茶與甜點之間的平衡，透過苦、甜與香氣的搭配，
+                        讓整體風味更有層次。以下為常見且實用的下午茶搭配原則。
+                    </p>
+
+                    <h4>🍰 甜度平衡</h4>
+                    <p>
+                        甜點的甜度不宜高於茶飲的風味強度，過甜的甜點容易掩蓋茶的香氣，
+                        使整體風味失去平衡。清香型茶飲適合搭配低甜度甜點，
+                        而風味較濃的茶則能搭配奶油或巧克力類甜點。
+                    </p>
+
+                    <h4>🍃 風味濃淡對應</h4>
+                    <p>
+                        茶與甜點的風味強度應相近，才能互相襯托。
+                        風味清淡的茶適合口味單純的甜點，
+                        而風味厚實的茶則能搭配層次較豐富的甜點。
+                    </p>
+
+                    <h4>☕ 口感互補</h4>
+                    <p>
+                        茶飲的清爽口感可平衡甜點的油膩感，使整體品嚐體驗更加舒適。
+                        奶油或起司類甜點適合搭配紅茶或烏龍茶，
+                        酥脆甜點則適合搭配口感滑順的茶飲。
+                    </p>
+
+                    <h4>🌼 香氣協調原則</h4>
+                    <p>
+                        茶與甜點若在香氣上能互相呼應，能提升整體風味的一致性。
+                        例如帶有柑橘香氣的伯爵茶，適合搭配檸檬或水果風味的甜點。
+                    </p>
+
+                    <h4>🌡️ 溫度對比</h4>
+                    <p>
+                        茶飲與甜點的冷熱搭配能增加味覺層次。
+                        熱茶適合搭配冷藏或常溫甜點，
+                        冰茶則適合搭配常溫蛋糕或餅乾。
+                    </p>
+
+                    <h4>⚠️ 避免搶味</h4>
+                    <p>
+                        過於強烈的香料或酒味甜點，容易掩蓋茶飲原本的風味，
+                        搭配時應避免讓單一風味過於突出。
+                    </p>
+                </div>
+            </div>
+
+            <div id="basic-info">
+                <h2>🌿 為什麼需要搭配指南？</h2>
+                    <p>
+                    很多人喜歡下午茶，卻不知道茶與甜點其實有搭配原則。
+                    SUM 下午茶希望用簡單的方式，
+                    帶你從茶的風味出發，找到最適合自己的甜點組合，
+                    讓每一次下午茶都更好喝、也更有質感。
+                    </p>
+
+            </div>
+
+            <div class="home-feature">
+                <img src="https://wolftea.com/wp-content/uploads/2017/05/%E8%8C%B6%E8%88%87%E7%94%9C%E9%BB%9E%E6%90%AD%E9%85%8D1-1024x683.jpg">
+                <div class="feature-text">
+                    <h3>下午茶，不只是吃甜點</h3>
+                    <p>
+                        茶的苦韻與甜點的甜味能互相平衡，
+                        讓整體風味更有層次。
+                    </p>
+                    <p>
+                        這是一種生活節奏的調整，也是一種享受。
+                    </p>
+                </div>
+            </div>
+
+            <h2 class="home-subtitle">🍰 推薦</h2>
+            <div class="home-recommend">
+
+                <div class="recommend-item" onclick="showSection('milk-tea')">
+                    <img src="https://i.epochtimes.com/assets/uploads/2023/04/id13980408-shutterstock_385203448-600x400.jpg">
+                    <div>
+                        <h4>經典奶茶</h4>
+                        <p>溫潤順口，新手不踩雷</p>
+                    </div>
+                </div>
+
+                <div class="recommend-item" onclick="showSection('lemon-tart')">
+                    <img src="https://lirp.cdn-website.com/72c1cffc/dms3rep/multi/opt/LINE_ALBUM_202415_240105_48-640w.jpg" alt="lemon tart">
+                    <div>
+                        <h4>檸檬塔</h4>
+                        <p>清新酸甜，是今日最亮眼的搭配選擇。</p>
+                    </div>
+                </div>
+
+                <div class="recommend-item" onclick="showSection('scone')">
+                    <img src="https://img.ltn.com.tw/Upload/food/page/2020/05/13/200513-10725-0-WIeOk.png" alt="scone">
+                    <div>
+                        <h4>經典司康</h4>
+                        <p>外酥內軟，搭配奶油與紅茶最對味。</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        
+        <div id="red" class="section-content tea-section">
+            <h2 style="color:#8b5e3c;">紅茶 Black Tea</h2>
+            <img class="tea-img" src="https://img.ltn.com.tw/Upload/food/page/2020/05/12/200512-10765-2-fkSOw.jpg" alt="紅茶圖片">
+            
+            <h3>簡介</h3>
+            <div class="info-box">
+                <p><strong>產地：</strong> 主要來自印度、大吉嶺、阿薩姆、斯里蘭卡及部分台灣地區。</p>
+                <p><strong>香氣 / 味道：</strong> 帶有焦糖、麥芽香，口感溫潤，回甘帶甜。</p>
+                <p><strong>特色：</strong> 茶葉全發酵，茶色紅亮，是全球飲用最廣泛的茶類。</p>
+            </div>
+
+            <h3>沖泡建議</h3>
+            <div class="info-box">
+                <p><strong>水溫：</strong> 90–95°C</p>
+                <p><strong>茶水比例：</strong> 1g 茶葉 : 50ml 水（個人口味可調整）</p>
+                <p><strong>浸泡時間：</strong> 2–3 分鐘</p>
+                <p>※ 想喝更濃郁可延長時間，但避免過久造成苦澀</p>
+            </div>
+
+            <h3>適合搭配的茶點</h3>
+            <div class="info-box">
+                <p>紅茶適合搭配：</p>
+                <ul>
+                    <li>司康</li>
+                    <li>奶油餅乾</li>
+                    <li>檸檬蛋糕</li>
+                    <li>起司甜點</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="green" class="section-content tea-section">
+            <h2 style="color:#8b5e3c;">綠茶 Green Tea</h2>
+            <img class="tea-img" src="https://images.chinatimes.com/newsphoto/2021-07-04/1024/20210704000719.jpg" alt="綠茶圖片">
+            
+            <h3>簡介</h3>
+            <div class="info-box">
+                <p><strong>產地：</strong> 中國、日本、台灣</p>
+                <p><strong>香氣 / 味道：</strong> 清香、草本味，口感清爽</p>
+                <p><strong>特色：</strong> 未發酵，茶色綠亮，回甘明顯，適合清淡口味。</p>
+            </div>
+
+            <h3>沖泡建議</h3>
+            <div class="info-box">
+                <p><strong>水溫：</strong> 75–85°C</p>
+                <p><strong>茶水比例：</strong> 1g 茶葉 : 50ml 水</p>
+                <p><strong>浸泡時間：</strong> 1–2 分鐘</p>
+                <p>※ 過久會變苦，口感清淡更佳</p>
+            </div>
+
+            <h3>適合搭配的茶點</h3>
+            <div class="info-box">
+                <p>綠茶適合搭配：</p>
+                <ul>
+                    <li>和菓子</li>
+                    <li>抹茶甜點</li>
+                    <li>水果</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="flower" class="section-content tea-section">
+            <h2 style="color:#8b5e3c;">花茶 Flower Tea</h2>
+            <img class="tea-img" src="https://www.japaholic.com/storage/article/images/2016/05/ExRevE1462182350059_debb_1.jpg" alt="花茶圖片">
+            
+            <h3>簡介</h3>
+            <div class="info-box">
+                <p><strong>產地：</strong> 中國、台灣</p>
+                <p><strong>香氣 / 味道：</strong> 花香，口感柔和</p>
+                <p><strong>特色：</strong> 通常以綠茶或烏龍茶為底，混合花瓣製作，香氣濃郁。</p>
+            </div>
+
+            <h3>沖泡建議</h3>
+            <div class="info-box">
+                <p><strong>水溫：</strong> 80–90°C</p>
+                <p><strong>茶水比例：</strong> 1g 茶葉 : 50ml 水</p>
+                <p><strong>浸泡時間：</strong> 2–3 分鐘</p>
+            </div>
+
+            <h3>適合搭配的茶點</h3>
+            <div class="info-box">
+                <p>花茶適合搭配：</p>
+                <ul>
+                    <li>瑪德蓮</li>
+                    <li>小蛋糕</li>
+                    <li>果乾</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="milk-tea" class="section-content tea-section">
+            <h2 style="color:#8b5e3c;">奶茶 Milk Tea</h2>
+
+            <img class="tea-img"
+                src="https://i.epochtimes.com/assets/uploads/2023/04/id13980408-shutterstock_385203448-600x400.jpg" alt="奶茶圖片">
+
+            <h3>簡介</h3>
+            <div class="info-box">
+                <p><strong>起源：</strong> 以紅茶為基底，加入牛奶或奶精調製而成，源自英式飲茶文化，後來在亞洲發展出多樣變化。</p>
+                <p><strong>香氣 / 味道：</strong> 茶香溫潤、奶香柔和，口感圓潤順口。</p>
+                <p><strong>特色：</strong> 奶香能中和茶的澀感，是入門者與甜點搭配的熱門選擇。</p>
+            </div>
+
+            <h3>沖泡建議</h3>
+            <div class="info-box">
+                <p><strong>基底茶：</strong> 阿薩姆紅茶、錫蘭紅茶、伯爵紅茶</p>
+                <p><strong>水溫：</strong> 90–95°C</p>
+                <p><strong>比例建議：</strong> 茶 7 : 奶 3（可依喜好調整）</p>
+                <p><strong>小技巧：</strong> 先泡濃茶再加熱牛奶，風味較不稀釋</p>
+            </div>
+
+            <h3>常見類型</h3>
+            <div class="info-box">
+                <ul>
+                    <li><strong>英式奶茶：</strong> 紅茶＋牛奶，茶味明顯</li>
+                    <li><strong>港式奶茶：</strong> 茶味濃厚、口感厚實</li>
+                    <li><strong>台式奶茶：</strong> 可加糖、珍珠，變化豐富</li>
+                </ul>
+            </div>
+
+            <h3>適合搭配的茶點</h3>
+            <div class="info-box">
+                <p>奶茶適合搭配：</p>
+                <ul>
+                    <li>司康</li>
+                    <li>英式奶油餅乾</li>
+                    <li>巧克力蛋糕</li>
+                    <li>磅蛋糕</li>
+                </ul>
+            </div>
+        </div>
+        
+
+        <div id="matcha-cake" class="section-content tea-section">
+
+            <h2 style="color:#8b5e3c;">抹茶小蛋糕</h2>
+
+            <div class="dessert-layout">
+
+                <div class="dessert-sidebar">
+                    <h4>簡介</h4>
+                    <p>以日本抹茶製作的小蛋糕，香氣濃郁帶苦韻，口感綿密。</p>
+
+                    <h4>特色 / 口感</h4>
+                    <p>濕潤軟綿、茶韻清晰、甜度較低。</p>
+
+                    <h4>建議搭配茶種</h4>
+                    <p>抹茶、玄米茶、焙茶。</p>
+
+                    <h4>來源 / 背景</h4>
+                    <p>源自日式糕點文化，常見於下午茶與手工甜點店。</p>
+                </div>
+
+                <div class="dessert-main">
+
+                    <img src="https://www.synf.com.tw/Files/Images/Product/02.%E5%8D%A1%E6%96%AF%E6%8F%90%E6%8B%89/%E5%B0%8F%E7%9B%92%E7%A6%AE%E7%9B%92/500X400-%E5%8D%A1%E6%96%AF%E6%8F%90%E6%8B%89%E6%8A%B9%E8%8C%B6.jpg" alt="抹茶小蛋糕">
+
+                    <div class="dessert-section-title">介紹</div>
+                    <p>
+                        抹茶小蛋糕帶有濃郁的茶香，口味偏清爽，利用抹茶本身的苦韻讓甜度更平衡。
+                        是非常適合搭配清爽或烘焙茶類的甜點。
+                    </p>
+
+                    <p>
+                        日式抹茶甜點源於茶道文化，強調香氣與層次，是許多茶館的招牌點心。
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div id="lemon-cake" class="section-content tea-section">
+
+            <h2 style="color:#8b5e3c;">檸檬蛋糕</h2>
+
+            <div class="dessert-layout">
+
+                <div class="dessert-sidebar">
+                    <h4>簡介</h4>
+                    <p>以檸檬皮與檸檬汁調味，酸甜平衡，香氣明亮。</p>
+
+                    <h4>特色 / 口感</h4>
+                    <p>外層清香、內部濕潤、入口清爽。</p>
+
+                    <h4>建議搭配茶種</h4>
+                    <p>伯爵紅茶、錫蘭紅茶。</p>
+
+                    <h4>來源 / 背景</h4>
+                    <p>歐洲家庭茶點中最經典的清新型蛋糕。</p>
+                </div>
+
+                <div class="dessert-main">
+
+                    <img src="https://im2.book.com.tw/image/getImage?i=https://www.books.com.tw/img/N01/174/12/N011741255.jpg&v=5e71f829k&w=375&h=375" alt="檸檬蛋糕">
+
+                    <div class="dessert-section-title">介紹</div>
+                    <p>
+                        檸檬蛋糕以清新的酸香著稱，是下午茶中非常受歡迎的輕甜點。
+                        香氣明亮、甜度適中，可搭配大多數紅茶。
+                    </p>
+
+                    <p>
+                        常見於英式茶會，搭配柑橘風味茶更能凸顯其香氣。
+                    </p>
+
+                </div>
+            </div>
+        </div>
+
+        <div id="cheese-cake" class="section-content tea-section">
+
+            <h2 style="color:#8b5e3c;">輕乳酪蛋糕</h2>
+
+            <div class="dessert-layout">
+
+                <div class="dessert-sidebar">
+                    <h4>簡介</h4>
+                    <p>質地介於慕斯與蛋糕之間，入口即化。</p>
+
+                    <h4>特色 / 口感</h4>
+                    <p>輕盈、綿密、奶香柔和。</p>
+
+                    <h4>建議搭配茶種</h4>
+                    <p>烏龍茶、茉莉綠茶。</p>
+
+                    <h4>來源 / 背景</h4>
+                    <p>源自日本輕乳酪文化，是亞洲茶點常見品項。</p>
+                </div>
+
+                <div class="dessert-main">
+
+                    <img src="https://shoplineimg.com/media/5e213a5121e7112758207480/original.webp?source_format=png" alt="輕乳酪蛋糕">
+
+                    <div class="dessert-section-title">介紹</div>
+                    <p>
+                        輕乳酪蛋糕口感細緻滑順，比傳統重乳酪更清爽不膩，
+                        與淡雅茶類十分搭配。
+                    </p>
+
+                    <p>
+                        起源於日本甜點店，標榜入口即化的輕盈口感。
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div id="lemon-tart" class="section-content tea-section">
+
+            <h2 style="color:#8b5e3c;">檸檬塔</h2>
+
+            <div class="dessert-layout">
+
+                <div class="dessert-sidebar">
+                    <h4>簡介</h4>
+                    <p>以酥脆塔皮搭配酸甜檸檬凝乳，是清爽度高的法式甜點。</p>
+
+                    <h4>特色 / 口感</h4>
+                    <p>塔皮酥脆、內餡滑順、酸度明亮。</p>
+
+                    <h4>建議搭配茶種</h4>
+                    <p>伯爵茶、英式紅茶。</p>
+
+                    <h4>來源 / 背景</h4>
+                    <p>源自法國傳統甜點，常見於下午茶與咖啡館。</p>
+                </div>
+
+                <div class="dessert-main">
+
+                    <img src="https://lirp.cdn-website.com/72c1cffc/dms3rep/multi/opt/LINE_ALBUM_202415_240105_48-640w.jpg" alt="檸檬塔">
+
+                    <div class="dessert-section-title">介紹</div>
+                    <p>
+                        檸檬塔以其清爽酸甜的檸檬凝乳著稱，塔皮酥香、內餡明亮，是能讓味蕾提神的
+                        清新甜點，非常適合搭配具柑橘香氣的紅茶類。
+                    </p>
+
+                    <p>
+                        檸檬塔在法式甜點中地位經典，以其簡單卻突出的風味深受甜點師推崇。
+                    </p>
+
+                </div>
+            </div>
+        </div>
+
+        <div id="berry-tart" class="section-content tea-section">
+
+            <h2 style="color:#8b5e3c;">莓果塔</h2>
+
+            <div class="dessert-layout">
+
+                <div class="dessert-sidebar">
+                    <h4>簡介</h4>
+                    <p>酥脆塔皮搭配卡士達與新鮮莓果，酸甜兼具的經典法式塔點。</p>
+
+                    <h4>特色 / 口感</h4>
+                    <p>酸甜平衡、果香濃郁、卡士達柔滑。</p>
+
+                    <h4>建議搭配茶種</h4>
+                    <p>花茶、果香紅茶。</p>
+
+                    <h4>來源 / 背景</h4>
+                    <p>法式甜點代表之一，以華麗擺盤和鮮果風味著稱。</p>
+                </div>
+
+                <div class="dessert-main">
+
+                    <img src="https://tokyo-kitchen.icook.network/uploads/recipe/cover/70828/bf65b211cc189140.jpg" alt="莓果塔">
+
+                    <div class="dessert-section-title">介紹</div>
+                    <p>
+                        莓果塔以其豐富的新鮮水果與卡士達醬聞名。
+                        酥脆的塔皮與水嫩莓果形成絕佳口感對比，是視覺與味覺兼具的甜點。
+                    </p>
+
+                    <p>
+                        在歐洲咖啡館中十分常見，是下午茶套餐的熱門品項。
+                    </p>
+
+                </div>
+            </div>
+        </div>
+
+        <div id="fruit-tart" class="section-content tea-section">
+
+            <h2 style="color:#8b5e3c;">水果塔</h2>
+
+            <div class="dessert-layout">
+
+                <div class="dessert-sidebar">
+                    <h4>簡介</h4>
+                    <p>以多種新鮮水果搭配柔滑卡士達與塔皮，是清爽系塔點代表。</p>
+
+                    <h4>特色 / 口感</h4>
+                    <p>水果香甜、卡士達柔滑、整體輕盈。</p>
+
+                    <h4>建議搭配茶種</h4>
+                    <p>綠茶、白茶。</p>
+
+                    <h4>來源 / 背景</h4>
+                    <p>常見於義式及法式甜點中，是夏季午茶的熱門選擇。</p>
+                </div>
+
+                <div class="dessert-main">
+
+                    <img src="https://silkslife.com/wp-content/uploads/%E6%B0%B4%E6%9E%9C%E5%A1%94.jpg" alt="水果塔">
+
+                    <div class="dessert-section-title">介紹</div>
+                    <p>
+                        水果塔以其自然的水果風味和清爽口感受到喜愛。
+                        非常適合搭配清新類茶飲，如綠茶或白茶。
+                    </p>
+
+                    <p>
+                        多變的水果組合讓此甜點一年四季都能有不同風味。
+                    </p>
+
+                </div>
+            </div>
+        </div>
+
+        <div id="scone" class="section-content tea-section">
+
+            <h2 style="color:#8b5e3c;">司康 Scone</h2>
+
+            <div class="dessert-layout">
+
+                <div class="dessert-sidebar">
+                    <h4>簡介</h4>
+                    <p>經典英式下午茶點，外酥內鬆軟，帶有自然奶香。</p>
+
+                    <h4>特色 / 口感</h4>
+                    <p>外層微酥、內部紮實鬆軟，與奶油和果醬搭配最佳。</p>
+
+                    <h4>建議搭配茶種</h4>
+                    <p>英式紅茶、伯爵紅茶、奶茶類。</p>
+
+                    <h4>來源 / 背景</h4>
+                    <p>源於蘇格蘭，是英國下午茶三層點心架上的經典甜點。</p>
+                </div>
+
+                <div class="dessert-main">
+
+                    <img src="https://img.ltn.com.tw/Upload/food/page/2020/05/13/200513-10725-0-WIeOk.png" alt="司康">
+
+                    <div class="dessert-section-title">介紹</div>
+                    <p>
+                        司康以香濃奶油與麵粉烘焙而成，是一款簡單卻迷人的茶點。
+                        外酥內軟的口感讓它成為茶會中不可或缺的角色，通常搭配凝脂奶油與果醬享用。
+                    </p>
+
+                    <p>
+                        傳統英式下午茶中，司康位於點心架中層或下層，象徵飽足與溫暖。
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div id="butter-cookie" class="section-content tea-section">
+
+            <h2 style="color:#8b5e3c;">英式奶油餅乾</h2>
+
+            <div class="dessert-layout">
+
+                <div class="dessert-sidebar">
+                    <h4>簡介</h4>
+                    <p>以高比例奶油製作，口感酥鬆、香氣濃郁。</p>
+
+                    <h4>特色 / 口感</h4>
+                    <p>入口即化、奶香厚實、甜度適中。</p>
+
+                    <h4>建議搭配茶種</h4>
+                    <p>大吉嶺紅茶、阿薩姆紅茶。</p>
+
+                    <h4>來源 / 背景</h4>
+                    <p>源於英國，是下午茶常見的基本餅乾之一。</p>
+                </div>
+
+                <div class="dessert-main">
+
+                    <img src="https://i.pinimg.com/736x/ca/96/d7/ca96d71432bbcc628c59f69cfe7acd1d.jpg" alt="奶油餅乾">
+
+                    <div class="dessert-section-title">介紹</div>
+                    <p>
+                        英式奶油餅乾以酥鬆的質地著稱，香氣由奶油與糖在烘焙中焦化而來，
+                        是最能代表英式家庭風味的經典小點。
+                    </p>
+
+                    <p>
+                        這類餅乾的配方簡單，卻在英式文化中歷久不衰，象徵著日常與溫暖。
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div id="macaron" class="section-content tea-section">
+
+            <h2 style="color:#8b5e3c;">馬卡龍 Macaron</h2>
+
+            <div class="dessert-layout">
+
+                <div class="dessert-sidebar">
+                    <h4>簡介</h4>
+                    <p>以蛋白霜與杏仁粉製作的法式甜點，外脆內軟、色彩繽紛。</p>
+
+                    <h4>特色 / 口感</h4>
+                    <p>外殼酥脆、內餡濃郁、甜度偏高。</p>
+
+                    <h4>建議搭配茶種</h4>
+                    <p>無糖紅茶、烏龍茶。</p>
+
+                    <h4>來源 / 背景</h4>
+                    <p>起源於法國，被視為法式甜點的代表之一。</p>
+                </div>
+
+                <div class="dessert-main">
+
+                    <img src="https://ialive.bwnet.com.tw/AC_Gallery/2024/04/68ad786e-1a7b-f19b-f576-74687fc2d83c.jpeg" alt="馬卡龍">
+
+                    <div class="dessert-section-title">介紹</div>
+                    <p>
+                        馬卡龍以其精緻外型與多變口味聞名，
+                        外層的薄脆與內餡的濃郁形成強烈反差，是甜度最高的下午茶點之一。
+                    </p>
+
+                    <p>
+                        馬卡龍的技術要求高，因此被視為甜點工藝中的精品代表。
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div id="yokan" class="section-content tea-section">
+
+            <h2 style="color:#8b5e3c;">羊羹 Yokan</h2>
+
+            <div class="dessert-layout">
+
+                <div class="dessert-sidebar">
+                    <h4>簡介</h4>
+                    <p>以紅豆、寒天與砂糖製成的日式傳統甜點，口感細緻滑順。</p>
+
+                    <h4>特色 / 口感</h4>
+                    <p>質地緊實柔滑、甜味內斂，適合慢慢品嚐。</p>
+
+                    <h4>建議搭配茶種</h4>
+                    <p>綠茶（煎茶、抹茶）、焙茶。</p>
+
+                    <h4>來源 / 背景</h4>
+                    <p>源自日本茶道文化，常作為正式茶席的配茶甜點。</p>
+                </div>
+
+                <div class="dessert-main">
+
+                    <img src="https://blog.dejima.store/wp-content/uploads/2024/08/iStock-1204944797-1536x1024.jpg.webp" alt="羊羹">
+
+                    <div class="dessert-section-title">介紹</div>
+                    <p>
+                        羊羹是日本最具代表性的和菓子之一，
+                        以簡單原料展現出細膩口感與沉穩甜味，
+                        特別適合搭配帶有澀感的綠茶。
+                    </p>
+
+                    <p>
+                        在茶道中，羊羹象徵「靜」與「節制」，
+                        常作為正式場合中平衡茶味的重要角色。
+                    </p>
+                </div>
+
+            </div>
+        </div>    
+
+        <div id="mochi" class="section-content tea-section">
+
+            <h2 style="color:#8b5e3c;">麻糬 Mochi</h2>
+
+            <div class="dessert-layout">
+
+                <div class="dessert-sidebar">
+                    <h4>簡介</h4>
+                    <p>以糯米製成的日式甜點，口感柔軟富有彈性。</p>
+
+                    <h4>特色 / 口感</h4>
+                    <p>Q彈柔軟、甜度可依內餡調整。</p>
+
+                    <h4>建議搭配茶種</h4>
+                    <p>綠茶、焙茶、烏龍茶。</p>
+
+                    <h4>來源 / 背景</h4>
+                    <p>日本傳統節慶與日常點心中皆常見的和菓子。</p>
+                </div>
+
+                <div class="dessert-main">
+
+                    <img src="https://www.cysweet.com.tw/upload/shop_b/thumb_5ab2c72a0d774e9f7d34463a8300bce4.jpg" alt="麻糬">
+
+                    <div class="dessert-section-title">介紹</div>
+                    <p>
+                        麻糬以其柔軟彈牙的口感深受喜愛，
+                        可搭配紅豆、抹茶或水果等多種內餡，
+                        變化性極高。
+                    </p>
+
+                    <p>
+                        由於口感溫和，麻糬非常適合作為清香茶飲的搭配甜點，
+                        不會搶走茶本身的風味。
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div id="origin" class="section-content tea-section">
+            <h2 style="color:#8b5e3c;">📜 下午茶的起源</h2>
+            <img class="tea-img" src="https://cdn.esence.travel/2023/01/Y9C2GQT4-6-768x510.jpg" alt="Afternoon Tea Origin">
+            <p>下午茶起源於英國，最早是在19世紀維多利亞時代，由安娜公爵夫人所創立。當時，英國社交文化重視下午茶會，從正午到晚餐之間時間過長，安娜公爵夫人發現自己常感到飢餓，於是在下午四點左右享用一杯茶，搭配三明治與甜點。</p>
+            <p>隨著時間演變，下午茶逐漸成為上流社會的社交活動，茶會不僅是飲茶，也是一種展示品味和禮儀的場合。茶會的形式越來越精緻，茶品和點心種類豐富，例如加入水果蛋糕、司康、三明治和馬卡龍等。</p>
+            <p>如今，下午茶文化已傳遍世界各地，高級酒店與咖啡館提供各式下午茶套餐，成為現代人休閒聚會的一種方式。無論是家庭聚會、朋友聚會或商務接待，下午茶都是優雅、放鬆且兼具社交的活動。</p>
+            <p>此外，下午茶的飲茶時間和茶點搭配也逐漸形成一定規則：紅茶常搭配奶油蛋糕或巧克力點心，綠茶與水果、清淡餅乾最搭，而花茶則適合搭配香甜、精緻的小點心。這些習慣延續至今，使下午茶成為品味與文化兼具的休閒方式。</p>
+        </div>
+
+        <div id="etiquette" class="section-content tea-section">
+            <h2 style="color:#8b5e3c;">🎩 下午茶禮儀小知識</h2>
+            <p>下午茶不僅是品嚐美食，更是一種社交場合的禮儀展現。了解基本禮儀能讓你在茶會中表現優雅、得體：</p>
+            <ul style="padding-left:20px;">
+                <li><strong>茶具使用：</strong>品茶時輕拿茶杯，小口品嚐。加茶時應使用茶壺，而非將茶杯靠近壺口。</li>
+                <li><strong>坐姿與舉止：</strong>保持自然端正姿勢，談話語氣柔和。避免大聲喧嘩或敲擊茶具，給人舒適感。</li>
+                <li><strong>甜點選擇：</strong>選擇與茶搭配的點心，如紅茶配奶油蛋糕或巧克力甜點，綠茶配水果或清淡餅乾，花茶配小蛋糕或馬卡龍。</li>
+                <li><strong>取食順序：</strong>建議先品茶，再搭配點心；若有多層點心架，可依順序由下至上享用點心，從口味清淡到濃郁。</li>
+                <li><strong>餐桌互動：</strong>尊重其他賓客，不搶取食物，避免評論口味差異，保持輕鬆禮貌的談話。</li>
+                <li><strong>服裝與場合：</strong>參加正式下午茶建議穿著得體，例如休閒正裝或簡單優雅服飾，保持整潔乾淨。</li>
+                <li><strong>使用餐巾：</strong>餐巾應輕放於膝上，吃點心時可輕擦嘴角，不宜用手直接觸碰食物。</li>
+                <li><strong>感謝主人：</strong>茶會結束時，向主人表達感謝，保持禮貌告別，展現教養與品味。</li>
+            </ul>
+            <p>掌握以上禮儀，不僅能提升下午茶的整體體驗，也讓自己在社交場合中更具優雅氣質。</p>
+        </div>
+
+    </div>
+
+    <div class="footer">更多內容未來持續更新</div>
+</div>
+
+<script>
+function showSection(id){
+    const sections = document.getElementsByClassName('section-content');
+    for(let i=0;i<sections.length;i++){
+        sections[i].style.display='none';
+    }
+    document.getElementById(id).style.display='block';
+    document.getElementById(id).scrollIntoView({behavior:"smooth"});
+}
+showSection('home');
+</script>
+
+</body>
+</html>
